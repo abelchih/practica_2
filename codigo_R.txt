@@ -1,0 +1,56 @@
+####################
+## CARGA DE DATOS ##
+####################
+
+cripto<-read.csv(file="consolidated_coin_data.csv",header=TRUE,sep=",")
+
+
+##datos vacios
+sapply(cripto, function(x)(sum(is.na(x))))
+
+
+#######################
+## ANALISIS DE DATOS ##
+#######################
+
+
+cripto_f <- subset(cripto, Currency=='bitcoin')
+
+stripchart(Open ~ Date, vertical=TRUE, method="stack", ylab="Open", data=cripto_f)
+stripchart(Close ~ Date, vertical=TRUE, method="stack", ylab="Close", data=cripto_f)
+stripchart(High ~ Date, vertical=TRUE, method="stack", ylab="High", data=cripto_f)
+stripchart(Low ~ Date, vertical=TRUE, method="stack", ylab="Low", data=cripto_f)
+
+### grafico de velas, especifico de cotizaciones
+library(ggplot2)
+
+qplot(Date, Open, data=cripto_f, 
+      geom = 'boxplot',
+      fill=I("lightskyblue"), 
+      col=I("cornflowerblue")
+      )
+
+qplot(Date, Close, data=cripto_f, 
+      geom = 'boxplot',
+      fill=I("lightskyblue"), 
+      col=I("cornflowerblue")
+      )
+qplot(Date, High, data=cripto_f, 
+      geom = 'boxplot',
+      fill=I("lightskyblue"), 
+      col=I("cornflowerblue")
+      )
+qplot(Date, Low, data=cripto_f, 
+      geom = 'boxplot',
+      fill=I("lightskyblue"), 
+      col=I("cornflowerblue")
+      )
+
+
+
+###NORMALIZAR DATOS#####
+
+library("scales")
+
+cripto_norm <- rescale(cripto_df)
+
